@@ -1,16 +1,6 @@
 import streamlit as st
 
-# Gunakan CSS untuk mengatur latar belakang
-st.markdown(
-    """
-    <style>
-    body {
-        background-color: #3498db;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-  
+
 # Judul Aplikasi
 st.title("Aplikasi Streamlit Menarik Tanpa Instalasi Pustaka")
 
@@ -38,12 +28,22 @@ if st.button("Klik di sini"):
     st.write("Anda menekan tombol!")
 
 # Pilihan
-options = ["Pilihan 1", "Pilihan 2", "Pilihan 3"]
-selected_option = st.selectbox("Pilih sesuatu:", options)
+options = ["P Gelud", "gas bang", "lalala","9999+"]
+selected_option = st.selectbox("Jangan diklik:", options)
 st.write("Anda memilih:", selected_option)
 
 # Sidebar
 st.sidebar.header("Tentang Aplikasi")
+sidebar_style = """
+    <style>
+        .css-1l02z5r {
+            background-color: #3498db;
+        }
+    </style>
+"""
+
+st.markdown(sidebar_style, unsafe_allow_html=True)
+
 st.sidebar.markdown("Ini adalah aplikasi Streamlit sederhana tanpa pustaka eksternal.")
 
 # Tampilkan teks berformat
