@@ -1,3 +1,12 @@
+pip install gensim
+
+
+import streamlit as st
+import pandas as pd
+import gensim
+from gensim import corpora
+from gensim.models import LdaModel
+import pyLDAvis.gensim_models
 
 # Judul Aplikasi
 st.title("Analisis Topic Modeling dengan Streamlit")
@@ -11,7 +20,7 @@ st.sidebar.subheader("Upload Dataset")
 uploaded_file = st.sidebar.file_uploader("Pilih file CSV", type=["csv"])
 
 if uploaded_file is not None:
-    data = 'punk'
+    data = pd.read_csv(uploaded_file)
 
     # Data Preprocessing (tokenisasi, stop words removal, dll.)
 
