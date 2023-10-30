@@ -2,17 +2,17 @@ import streamlit as st
 
 
 # Judul Aplikasi
-st.title("Aplikasi Streamlit Menarik Tanpa Instalasi Pustaka")
+st.title("MockUp Aplikasi ANAK AYAM")
 
 # Deskripsi Aplikasi
-st.markdown("Selamat datang di aplikasi Streamlit ini. Ini adalah contoh antarmuka sederhana tanpa menggunakan pustaka eksternal.")
+st.markdown("Selamat datang di aplikasi ANAK AYAM ini. Ini adalah contoh antarmuka sederhana tanpa menggunakan pustaka eksternal.")
 
 # Teks Sambutan
-st.header("Selamat Datang di Aplikasi Streamlit")
+st.header("Selamat Datang di ANAK AYAM")
 st.write("Aplikasi ini dibuat dengan menggunakan Streamlit, yang memungkinkan Anda untuk membuat aplikasi web dengan mudah.")
 
 # Gambar
-st.image("isleworth-mona-lisa.jpg", caption="Ini adalah gambar monalisa")
+st.image("ANAK AYAM LOGO BLUE.jpg", caption="ANAK AYAM JAYA JAYA JAYA!!!!!")
 
 # Grafik
 st.subheader("Grafik Contoh")
