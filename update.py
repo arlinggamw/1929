@@ -11,7 +11,7 @@ st.header("Selamat Datang di Aplikasi Streamlit")
 st.write("Aplikasi ini dibuat dengan menggunakan Streamlit, yang memungkinkan Anda untuk membuat aplikasi web dengan mudah.")
 
 # Gambar
-st.image("gambar.jpg", caption="Ini adalah gambar")
+st.image("isleworth-mona-lisa.jpg", caption="Ini adalah gambar monalisa")
 
 # Grafik
 st.subheader("Grafik Contoh")
