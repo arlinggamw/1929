@@ -1,5 +1,16 @@
 import streamlit as st
 
+# Gunakan CSS untuk mengatur latar belakang
+st.markdown(
+    """
+    <style>
+    body {
+        background-color: #3498db;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+  
 # Judul Aplikasi
 st.title("Aplikasi Streamlit Menarik Tanpa Instalasi Pustaka")
 
