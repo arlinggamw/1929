@@ -1,38 +1,44 @@
-pip install scikit-learn
 import streamlit as st
 import pandas as pd
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.decomposition import LatentDirichletAllocation
+import gensim
+from gensim import corpora
+from gensim.models import LdaModel
+import pyLDAvis.gensim_models
 
-# Fungsi untuk pemodelan topik
-def run_lda(df, num_topics):
-    vectorizer = CountVectorizer(max_df=0.95, min_df=2, stop_words='english')
-    data_vectorized = vectorizer.fit_transform(df['text'])
+# Load data
+data = pd.read_csv("data.csv")  # Gantilah "data.csv" dengan nama file data Anda
 
-    lda = LatentDirichletAllocation(n_components=num_topics, random_state=42)
-    lda.fit(data_vectorized)
+# Preprocessing data (misalnya: tokenisasi, stop words removal, stemming, dll.)
 
-    return lda
+# Membangun corpus dan dictionary
+text_data = data['text'].tolist()
+dictionary = corpora.Dictionary(text_data)
+corpus = [dictionary.doc2bow(text) for text in text_data]
 
-# Tampilan Streamlit
-st.title('Aplikasi Pemodelan Topik')
+# Membangun model LDA
+num_topics = st.sidebar.slider("Jumlah Topik", min_value=2, max_value=20, value=5)
+lda_model = LdaModel(corpus, num_topics=num_topics, id2word=dictionary, passes=15)
 
-# Unggah dokumen
-st.write('### Unggah Dokumen')
-uploaded_file = st.file_uploader('Unggah file CSV yang berisi teks dokumen', type=['csv'])
+# Tampilkan topik
+st.sidebar.subheader("Topik Utama")
+for topic in range(num_topics):
+    st.sidebar.write(f"Topik {topic + 1}: {lda_model.print_topic(topic)}")
 
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-    st.write(df.head())
+# Visualisasi dengan pyLDAvis
+vis_data = pyLDAvis.gensim_models.prepare(lda_model, corpus, dictionary)
+st.write("Visualisasi Topik:")
+st.pydeck_chart(vis_data)
 
-    num_topics = st.slider('Pilih Jumlah Topik', 2, 10, 4)
+# Tampilkan dokumen dan topik yang relevan
+st.sidebar.subheader("Analisis Dokumen")
+document_index = st.sidebar.number_input("Nomor Dokumen (0 - 999)", min_value=0, max_value=len(data) - 1)
+document = text_data[document_index]
+document_bow = dictionary.doc2bow(document)
+document_topics = lda_model.get_document_topics(document_bow)
 
-    if st.button('Mulai Pemodelan'):
-        lda_model = run_lda(df, num_topics)
-        st.success('Pemodelan selesai!')
+st.write(f"Dokumen #{document_index}:")
+st.write(data['text'][document_index])
 
-        # Tampilkan kata-kata kunci untuk setiap topik
-        st.write('### Kata-kata Kunci Topik:')
-        for i, topic in enumerate(lda_model.components_):
-            top_words = [vectorizer.get_feature_names_out()[i] for i in topic.argsort()[-5:][::-1]]
-            st.write(f'Topik {i+1}: {", ".join(top_words)}')
+st.write("Topik yang relevan:")
+for topic, score in document_topics:
+    st.write(f"Topik {topic + 1}: {score:.2f}")
